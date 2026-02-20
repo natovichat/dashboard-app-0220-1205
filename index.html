@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>📊 Dashboard</h2>
+            </div>
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-page="overview">
+                    <span class="icon">🏠</span>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="nav-item" data-page="analytics">
+                    <span class="icon">📈</span>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item" data-page="reports">
+                    <span class="icon">📄</span>
+                    <span>Reports</span>
+                </a>
+                <a href="#" class="nav-item" data-page="settings">
+                    <span class="icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1 id="page-title">Overview Dashboard</h1>
+                <div class="user-info">
+                    <span class="user-name">👤 User</span>
+                </div>
+            </header>
+
+            <div class="content-area" id="content-area">
+                <!-- Overview Page -->
+                <div class="page-content active" id="overview-page">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-info">
+                                <h3>Total Users</h3>
+                                <p class="stat-value" id="users-count">0</p>
+                                <span class="stat-change positive">+12% from last month</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-info">
+                                <h3>Revenue</h3>
+                                <p class="stat-value" id="revenue-count">$0</p>
+                                <span class="stat-change positive">+8% from last month</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">📦</div>
+                            <div class="stat-info">
+                                <h3>Orders</h3>
+                                <p class="stat-value" id="orders-count">0</p>
+                                <span class="stat-change negative">-3% from last month</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-icon">⭐</div>
+                            <div class="stat-info">
+                                <h3>Satisfaction</h3>
+                                <p class="stat-value" id="satisfaction-rate">0%</p>
+                                <span class="stat-change positive">+5% from last month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-section">
+                        <div class="chart-card">
+                            <h3>Sales Overview</h3>
+                            <div class="chart-placeholder">
+                                <canvas id="sales-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="chart-card">
+                            <h3>Traffic Sources</h3>
+                            <div class="chart-placeholder">
+                                <canvas id="traffic-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Page -->
+                <div class="page-content" id="analytics-page">
+                    <h2>Analytics Dashboard</h2>
+                    <p class="placeholder-text">Advanced analytics and metrics will be displayed here.</p>
+                    <div class="chart-placeholder large">
+                        <canvas id="analytics-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Reports Page -->
+                <div class="page-content" id="reports-page">
+                    <h2>Reports</h2>
+                    <p class="placeholder-text">Generate and view detailed reports here.</p>
+                    <div class="reports-list">
+                        <div class="report-item">📊 Monthly Sales Report</div>
+                        <div class="report-item">📈 User Growth Analysis</div>
+                        <div class="report-item">💼 Financial Summary</div>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div class="page-content" id="settings-page">
+                    <h2>Settings</h2>
+                    <p class="placeholder-text">Configure your dashboard preferences.</p>
+                    <div class="settings-options">
+                        <div class="setting-item">
+                            <label>Dark Mode</label>
+                            <input type="checkbox" id="dark-mode-toggle">
+                        </div>
+                        <div class="setting-item">
+                            <label>Email Notifications</label>
+                            <input type="checkbox" checked>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
