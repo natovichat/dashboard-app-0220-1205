@@ -3,39 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard App</title>
+    <title>Dashboard App - Interactive Analytics</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="spinner"></div>
+        <p>Loading dashboard...</p>
+    </div>
+
     <div class="dashboard-container">
-        <aside class="sidebar">
+        <aside class="sidebar" role="navigation" aria-label="Main navigation">
             <div class="logo">
                 <h2>📊 Dashboard</h2>
             </div>
             <nav class="nav-menu">
-                <a href="#" class="nav-item active" data-page="overview">
-                    <span class="icon">🏠</span>
+                <a href="#overview" class="nav-item active" data-page="overview" role="button" aria-label="Overview page" tabindex="0">
+                    <span class="icon" aria-hidden="true">🏠</span>
                     <span>Overview</span>
                 </a>
-                <a href="#" class="nav-item" data-page="analytics">
-                    <span class="icon">📈</span>
+                <a href="#analytics" class="nav-item" data-page="analytics" role="button" aria-label="Analytics page" tabindex="0">
+                    <span class="icon" aria-hidden="true">📈</span>
                     <span>Analytics</span>
                 </a>
-                <a href="#" class="nav-item" data-page="reports">
-                    <span class="icon">📄</span>
+                <a href="#reports" class="nav-item" data-page="reports" role="button" aria-label="Reports page" tabindex="0">
+                    <span class="icon" aria-hidden="true">📄</span>
                     <span>Reports</span>
                 </a>
-                <a href="#" class="nav-item" data-page="settings">
-                    <span class="icon">⚙️</span>
+                <a href="#settings" class="nav-item" data-page="settings" role="button" aria-label="Settings page" tabindex="0">
+                    <span class="icon" aria-hidden="true">⚙️</span>
                     <span>Settings</span>
                 </a>
             </nav>
         </aside>
 
-        <main class="main-content">
+        <main class="main-content" role="main">
             <header class="header">
-                <h1 id="page-title">Overview Dashboard</h1>
-                <div class="user-info">
+                <div class="header-left">
+                    <h1 id="page-title">Overview Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <button class="icon-button" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle theme">
+                        <span id="theme-icon">🌙</span>
+                    </button>
+                    <button class="icon-button" id="export-json" aria-label="Export data as JSON" title="Export as JSON">
+                        📥 JSON
+                    </button>
+                    <button class="icon-button" id="export-csv" aria-label="Export data as CSV" title="Export as CSV">
+                        📥 CSV
+                    </button>
                     <span class="user-name">👤 User</span>
                 </div>
             </header>
@@ -43,56 +59,75 @@
             <div class="content-area" id="content-area">
                 <!-- Overview Page -->
                 <div class="page-content active" id="overview-page">
-                    <div class="stats-grid">
-                        <div class="stat-card">
+                    <div class="controls-bar">
+                        <button class="btn-secondary" id="customize-dashboard" aria-label="Customize visible stats">
+                            ⚙️ Customize Dashboard
+                        </button>
+                        <button class="btn-secondary" id="reset-data" aria-label="Reset all data to defaults">
+                            🔄 Reset Data
+                        </button>
+                    </div>
+
+                    <div class="stats-grid" id="stats-grid">
+                        <div class="stat-card" data-stat="users" tabindex="0" role="button" aria-label="Total users: Click to edit">
                             <div class="stat-icon">👥</div>
                             <div class="stat-info">
                                 <h3>Total Users</h3>
                                 <p class="stat-value" id="users-count">0</p>
                                 <span class="stat-change positive">+12% from last month</span>
+                                <div class="edit-hint">Click to edit</div>
                             </div>
                         </div>
 
-                        <div class="stat-card">
+                        <div class="stat-card" data-stat="revenue" tabindex="0" role="button" aria-label="Revenue: Click to edit">
                             <div class="stat-icon">💰</div>
                             <div class="stat-info">
                                 <h3>Revenue</h3>
                                 <p class="stat-value" id="revenue-count">$0</p>
                                 <span class="stat-change positive">+8% from last month</span>
+                                <div class="edit-hint">Click to edit</div>
                             </div>
                         </div>
 
-                        <div class="stat-card">
+                        <div class="stat-card" data-stat="orders" tabindex="0" role="button" aria-label="Orders: Click to edit">
                             <div class="stat-icon">📦</div>
                             <div class="stat-info">
                                 <h3>Orders</h3>
                                 <p class="stat-value" id="orders-count">0</p>
                                 <span class="stat-change negative">-3% from last month</span>
+                                <div class="edit-hint">Click to edit</div>
                             </div>
                         </div>
 
-                        <div class="stat-card">
+                        <div class="stat-card" data-stat="satisfaction" tabindex="0" role="button" aria-label="Satisfaction: Click to edit">
                             <div class="stat-icon">⭐</div>
                             <div class="stat-info">
                                 <h3>Satisfaction</h3>
                                 <p class="stat-value" id="satisfaction-rate">0%</p>
                                 <span class="stat-change positive">+5% from last month</span>
+                                <div class="edit-hint">Click to edit</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="charts-section">
                         <div class="chart-card">
-                            <h3>Sales Overview</h3>
-                            <div class="chart-placeholder">
-                                <canvas id="sales-chart"></canvas>
+                            <div class="chart-header">
+                                <h3>Sales Overview</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="sales-chart" aria-label="Sales overview line chart"></canvas>
+                                <div class="chart-tooltip" id="sales-tooltip"></div>
                             </div>
                         </div>
 
                         <div class="chart-card">
-                            <h3>Traffic Sources</h3>
-                            <div class="chart-placeholder">
-                                <canvas id="traffic-chart"></canvas>
+                            <div class="chart-header">
+                                <h3>Traffic Sources</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="traffic-chart" aria-label="Traffic sources pie chart"></canvas>
+                                <div class="chart-tooltip" id="traffic-tooltip"></div>
                             </div>
                         </div>
                     </div>
@@ -100,41 +135,162 @@
 
                 <!-- Analytics Page -->
                 <div class="page-content" id="analytics-page">
-                    <h2>Analytics Dashboard</h2>
-                    <p class="placeholder-text">Advanced analytics and metrics will be displayed here.</p>
-                    <div class="chart-placeholder large">
-                        <canvas id="analytics-chart"></canvas>
+                    <div class="analytics-controls">
+                        <h2>Analytics Dashboard</h2>
+                        <div class="date-range-picker">
+                            <label for="date-from">From:</label>
+                            <input type="date" id="date-from" aria-label="Start date">
+                            <label for="date-to">To:</label>
+                            <input type="date" id="date-to" aria-label="End date">
+                            <button class="btn-primary" id="apply-date-filter">Apply Filter</button>
+                        </div>
+                    </div>
+                    <div class="chart-card large">
+                        <div class="chart-container">
+                            <canvas id="analytics-chart" aria-label="Analytics yearly chart"></canvas>
+                            <div class="chart-tooltip" id="analytics-tooltip"></div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Reports Page -->
                 <div class="page-content" id="reports-page">
                     <h2>Reports</h2>
-                    <p class="placeholder-text">Generate and view detailed reports here.</p>
                     <div class="reports-list">
-                        <div class="report-item">📊 Monthly Sales Report</div>
-                        <div class="report-item">📈 User Growth Analysis</div>
-                        <div class="report-item">💼 Financial Summary</div>
+                        <div class="report-item" role="button" tabindex="0" aria-label="Monthly Sales Report">
+                            <span class="report-icon">📊</span>
+                            <div class="report-info">
+                                <h4>Monthly Sales Report</h4>
+                                <p>Last generated: Today</p>
+                            </div>
+                        </div>
+                        <div class="report-item" role="button" tabindex="0" aria-label="User Growth Analysis">
+                            <span class="report-icon">📈</span>
+                            <div class="report-info">
+                                <h4>User Growth Analysis</h4>
+                                <p>Last generated: Yesterday</p>
+                            </div>
+                        </div>
+                        <div class="report-item" role="button" tabindex="0" aria-label="Financial Summary">
+                            <span class="report-icon">💼</span>
+                            <div class="report-info">
+                                <h4>Financial Summary</h4>
+                                <p>Last generated: This week</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Settings Page -->
                 <div class="page-content" id="settings-page">
                     <h2>Settings</h2>
-                    <p class="placeholder-text">Configure your dashboard preferences.</p>
-                    <div class="settings-options">
+                    <div class="settings-section">
+                        <h3>Appearance</h3>
                         <div class="setting-item">
-                            <label>Dark Mode</label>
-                            <input type="checkbox" id="dark-mode-toggle">
+                            <div class="setting-info">
+                                <label for="dark-mode-toggle">Dark Mode</label>
+                                <p class="setting-description">Toggle between light and dark themes</p>
+                            </div>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="dark-mode-toggle" aria-label="Toggle dark mode">
+                                <span class="toggle-slider"></span>
+                            </label>
                         </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Dashboard Customization</h3>
                         <div class="setting-item">
-                            <label>Email Notifications</label>
-                            <input type="checkbox" checked>
+                            <div class="setting-info">
+                                <label>Visible Stat Cards</label>
+                                <p class="setting-description">Choose which stats to display on overview</p>
+                            </div>
+                        </div>
+                        <div class="stat-visibility-controls">
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="stat-visibility" data-stat="users" checked>
+                                <span>👥 Total Users</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="stat-visibility" data-stat="revenue" checked>
+                                <span>💰 Revenue</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="stat-visibility" data-stat="orders" checked>
+                                <span>📦 Orders</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="stat-visibility" data-stat="satisfaction" checked>
+                                <span>⭐ Satisfaction</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Data Management</h3>
+                        <div class="setting-item">
+                            <button class="btn-danger" id="clear-storage" aria-label="Clear all saved data">
+                                🗑️ Clear All Data
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal" id="edit-modal" role="dialog" aria-labelledby="modal-title" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Edit Stat Value</h3>
+                <button class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <label for="stat-input" id="stat-label">New Value:</label>
+                <input type="number" id="stat-input" step="0.01" min="0" aria-describedby="input-hint">
+                <p class="input-hint" id="input-hint">Enter a positive number</p>
+                <div class="error-message" id="error-message"></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modal-cancel">Cancel</button>
+                <button class="btn-primary" id="modal-save">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customize Modal -->
+    <div class="modal" id="customize-modal" role="dialog" aria-labelledby="customize-title" aria-modal="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="customize-title">Customize Dashboard</h3>
+                <button class="modal-close" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Select which stat cards to display:</p>
+                <div class="stat-visibility-controls">
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="stat-visibility-modal" data-stat="users" checked>
+                        <span>👥 Total Users</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="stat-visibility-modal" data-stat="revenue" checked>
+                        <span>💰 Revenue</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="stat-visibility-modal" data-stat="orders" checked>
+                        <span>📦 Orders</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" class="stat-visibility-modal" data-stat="satisfaction" checked>
+                        <span>⭐ Satisfaction</span>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" id="customize-close">Done</button>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
